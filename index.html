@@ -262,7 +262,9 @@
 
     function renderQuestion(qIndex) {
         const state = appStates[qIndex];
-        if (state.isCompleted) return; /
+        // ĐÃ SỬA LỖI Ở DÒNG BÊN DƯỚI
+        if (state.isCompleted) return; 
+        
         const answerArea = document.getElementById(`answer-area-${qIndex}`);
         const wordBank = document.getElementById(`word-bank-${qIndex}`);
 
@@ -273,7 +275,7 @@
             charDiv.innerText = item.char;
             
             if (state.selectedIndices.includes(bIndex)) {
-                charDiv.classList.add('hidden'); // Ẩn nếu đã chọn
+                charDiv.classList.add('hidden'); 
             } else {
                 charDiv.onclick = () => selectChar(qIndex, bIndex);
             }
@@ -285,11 +287,10 @@
             const charDiv = document.createElement('div');
             charDiv.className = 'char-block';
             charDiv.innerText = state.shuffledBank[bIndex].char;
-            charDiv.onclick = () => deselectChar(qIndex, bIndex); // Bấm để gỡ ra
+            charDiv.onclick = () => deselectChar(qIndex, bIndex); 
             answerArea.appendChild(charDiv);
         });
 
-        // Tự động check khi số lượng chữ ở ô đáp án bằng với độ dài câu gốc
         if (state.selectedIndices.length === state.targetChars.length && state.targetChars.length > 0) {
             checkAnswer(qIndex);
         }
@@ -324,18 +325,16 @@
         const answerArea = document.getElementById(`answer-area-${qIndex}`);
 
         if (userStr === correctStr) {
-            // Đúng
-            state.isCompleted = true; // Khóa câu này lại
+            state.isCompleted = true; 
             resultArea.classList.remove('error');
-            fullSentenceEl.innerText = data.c; // Hiện câu chuẩn có dấu câu
+            fullSentenceEl.innerText = data.c; 
             translationEl.innerText = data.n;
             resultArea.style.display = 'block';
             
             Array.from(answerArea.children).forEach(child => child.onclick = null);
         } else {
-            // Sai
             answerArea.classList.remove('shake');
-            void answerArea.offsetWidth; // Reset animation
+            void answerArea.offsetWidth; 
             answerArea.classList.add('shake');
             
             resultArea.classList.add('error');
@@ -347,6 +346,3 @@
 
     initApp();
 </script>
-
-</body>
-</html>
