@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Chữ Hán - Luyện Phản Xạ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+
+        :root {
+            --bg-color: #e8f5e9;
+            --container-bg: #ffffff;
+            --primary-color: #4caf50;
+            --primary-dark: #388e3c;
+            --text-color: #333;
+            --border-color: #c8e6c9;
+            --han-color: #1b5e20;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- PHẦN CSS MỚI CHO HEADER VÀ NÚT BẤM --- */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1.page-title {
+            text-align: left;
+            color: var(--primary-color);
+            margin: 0; /* Xóa margin cũ để căn chỉnh đều với nút bấm */
+            font-size: 2em;
+        }
+
+        .btn-next-part {
+            display: inline-block;
+            padding: 10px 18px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: var(--primary-color); 
+            text-decoration: none;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-next-part:hover {
+            background-color: var(--primary-dark);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        /* --- KẾT THÚC PHẦN CSS MỚI --- */
+
+        .question-card {
+            background-color: var(--container-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .am-han-viet {
+            font-size: 1.2em;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .answer-area {
+            min-height: 60px;
+            border: 2px dashed #a5d6a7;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            background-color: #fafafa;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .char-block {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.8em;
+            color: var(--han-color);
+            background-color: white;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            padding: 2px 12px;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.1s;
+        }
+
+        .char-block:active {
+            transform: scale(0.95);
+        }
+
+        .char-block.hidden {
+            visibility: hidden;
+            width: 0;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        .result-area {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            animation: fadeIn 0.4s;
+        }
+
+        .result-area.error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        .full-sentence {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 2em;
+            color: var(--han-color);
+            margin-bottom: 8px;
+        }
+
+        .translation {
+            font-size: 1em;
+            color: #333;
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    
+    <div class="header-container">
+        <h1 class="page-title">Luyện Ghép Chữ Hán Cổ</h1>
+        <a href="https://voduongthangquang-lab.github.io/PHTX-GK3-HANCO-VietHan/" class="btn-next-part" target="_blank">
+            Phần 4 (Luyện Việt - Hán) ➔
+        </a>
+    </div>
+    <div id="quiz-list">
+        </div>
+</div>
+
+<script>
+    const lessonData = [
+        { h: "Thân thể chi ngoại diện hữu bì mao, bì hạ hữu cơ nhục, nhục trung hữu cân cốt.", c: "身體之外面有皮毛，皮下有肌肉，肉中有筋骨。", n: "Mặt ngoài của thân thể có da, lông; dưới da có thịt, trong thịt có gân, xương." },
+        { h: "Nhục trung hữu cân cốt. Tích vi quần cốt chi chủ. Tích trung hữu tủy.", c: "肉中有筋骨。脊為群骨之主。脊中有髓。", n: "Trong thịt có gân, xương. Xương sống là xương chính của tất cả các xương. Trong xương sống, có tủy." },
+        { h: "Vô cốt nhân bất năng lập; vô cân nhân bất năng cử động.", c: "無骨人不能立。無筋人不能舉動。", n: "Không có xương, người ta không thể đứng được; Không có gân, người ta không thể cử động được." },
+        { h: "Nhĩ vi thính quan, mục vi thị quan, tị vi khứu quan, thiệt vi vị quan.", c: "耳為聽官，目為視官，鼻為嗅官，舌為味官。", n: "Tai là thính giác (cơ quan dùng để nghe), mắt là thị giác (cơ quan dùng để nhìn), mũi là khứu giác (cơ quan dùng để ngửi), lưỡi là vị giác (cơ quan dùng để nếm)." },
+        { h: "Bất năng thính giả vi lung, bất năng thị giả vi manh, bất năng ngôn giả vi á.", c: "不能聽者為聾，不能視者為肓，不能言者為啞。", n: "Người không nghe được là người điếc, người (kẻ) không thấy được là người mù, kẻ không nói được là (người) câm." },
+        { h: "Nhược vi trần cấu sở trở, tắc hãn tiết bất sướng, cố mộc dục nghi cần.", c: "若爲塵垢所阻，則汗泄不暢，故沐浴宜勤。", n: "Nếu bị bụi dơ ngăn trở thì mồ hôi tiết ra không thông suốt, cho nên việc tắm gội nên chăm." },
+        { h: "Mộc dục bất đặc trừ cấu, hựu năng trợ huyết dịch chi lưu thông.", c: "沐浴不特除垢，又能助血液之流通。", n: "Tắm gội, chẳng những trừ được dơ, mà còn có thể giúp cho sự lưu thông của huyết dịch (máu)." },
+        { h: "Thể thao năng hoạt huyết mạch, cường cân cốt, hựu năng trợ toàn thể chi phát dục.", c: "體操能活血脈，強筋骨，又能助全體之發育。", n: "Thể thao làm hoạt động các mạch máu, làm mạnh gân cốt, lại có thể giúp vào sự trưởng thành của toàn thân thể." },
+        { h: "Mể đa thiểu, dụng đẩu lượng. Bố trường đoản, dụng xích lượng.", c: "米多少，用斗量。布長短，用尺量。", n: "Gạo nhiều ít, dùng đấu đong. Vải dài ngắn, dùng thước đo." },
+        { h: "Mễ thập thăng, vi nhất đẩu. Bố thập thốn, vi nhất xích.", c: "米十升，為一斗。布十寸為一尺。", n: "Mười thưng gạo là một đấu. Mười tất vải là một thước." },
+        { h: "Hữu lão nhân, đề trúc lam, nhập thị trung, mãi ngư nhất vĩ, bộ hành hoàn gia.", c: "有老人，提竹籃，入市中，買魚一尾，步行還家。", n: "Có một ông già xách cái giỏ tre, đi vào trong chợ. Mua một con cá, (rồi) đi bộ về nhà." },
+        { h: "Sở nhân hữu thiệp giang giả, Kỳ kiếm tự chu trung trụy ư thủy.", c: "楚人有涉江者。其劍自舟中墜於水。", n: "Nước Sở có người đi qua sông. Cây gươm của anh ta từ trên thuyền rơi xuống nước." },
+        { h: "Cự khắc kỳ chu viết: “Thị ngô kiếm chi sở tùng trụy”.", c: "遽刻其舟曰：「是吾劍之所從墜」。", n: "Anh ta vội khắc vào thuyền và nói: “Đây là nơi gươm của ta rơi xuống”." },
+        { h: "Chu chỉ, tùng kỳ sở khắc giả, nhập thủy cầu chi.", c: "舟止，從其所刻者，入水求之。", n: "Thuyền dừng, anh ta mới theo chỗ mình đã khắc nhảy vào nước tìm gươm." },
+        { h: "Chu dĩ hành hĩ, nhi kiếm bất hành, cầu kiếm nhược thử, bất diệc hoặc hồ?", c: "舟已行矣，而劍不行，求劍若此，不亦惑乎？", n: "Thuyền đã đi rồi, mà gươm không đi, tìm gươm như thế, chẳng cũng là lầm lẫn lắm ư?" },
+        { h: "Kiêu phùng cưu, cưu viết: “Tử tương an chi?”.", c: "梟逢鳩，鳩曰：「子將安之？」", n: "Chim cú gặp chim cưu, chim cưu hỏi: “Anh định đi đâu?”." },
+        { h: "Kiêu viết: “Ngã tương đông tỉ”. Cưu viết: “ Hà cố?”.", c: "梟曰：「我將東徙」。鳩曰：「何故？」。", n: "Chim cú nói: “ Tôi định dời sang phía đông”. Chim cưu hỏi: “ Vì sao thế?”." },
+        { h: "Kiêu viết: “Hương nhân giai ố ngã minh, dĩ cố đông tỉ”.", c: "梟曰：「鄉人皆惡我鳴，以故東徙」。", n: "Chim cú nói: “Người trong làng đều ghét tiếng kêu của tôi, vì thế tôi dời sang phía đông”." },
+        { h: "Cưu viết: “Tử năng canh minh khả hĩ; bất năng canh minh, đông tỉ do ố tử chi thanh”.", c: "鳩曰：「子能更鳴可矣；不能更鳴，東徙猶惡子之聲」。", n: "Chim cưu nói: “Anh phải thay đổi được tiếng kêu mới nên, nếu không thay đổi được tiếng kêu thì dời sang đông người ta vẫn ghét tiếng kêu của anh”." }
+    ];
+
+    // Mảng lưu trữ trạng thái của từng câu hỏi
+    let appStates = [];
+
+    function shuffleArray(array) {
+        let newArr = [...array];
+        for (let i = newArr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+        }
+        return newArr;
+    }
+
+    function initApp() {
+        const listContainer = document.getElementById('quiz-list');
+        let htmlContent = '';
+
+        lessonData.forEach((data, index) => {
+            // Lọc bỏ dấu câu
+            let targetChars = data.c.replace(/[^\u4E00-\u9FFF一二三四五六七八九十]/g, '').split('');
+            let objectsToShuffle = targetChars.map((char, originalId) => ({ char, originalId }));
+            
+            // Lưu trạng thái độc lập cho câu này
+            appStates.push({
+                targetChars: targetChars,
+                shuffledBank: shuffleArray(objectsToShuffle),
+                selectedIndices: [],
+                isCompleted: false
+            });
+
+            htmlContent += `
+                <div class="question-card" id="card-${index}">
+                    <div class="am-han-viet">Câu ${index + 1}: ${data.h}</div>
+                    <div class="answer-area" id="answer-area-${index}"></div>
+                    <div class="word-bank" id="word-bank-${index}"></div>
+                    <div class="result-area" id="result-area-${index}">
+                        <div class="full-sentence" id="full-sentence-${index}"></div>
+                        <div class="translation" id="translation-${index}"></div>
+                    </div>
+                </div>
+            `;
+        });
+
+        listContainer.innerHTML = htmlContent;
+
+        // Render toàn bộ các câu hỏi ra màn hình
+        appStates.forEach((_, index) => {
+            renderQuestion(index);
+        });
+    }
+
+    function renderQuestion(qIndex) {
+        const state = appStates[qIndex];
+        if (state.isCompleted) return; // Nếu xếp xong rồi thì không render lại nữa
+
+        const answerArea = document.getElementById(`answer-area-${qIndex}`);
+        const wordBank = document.getElementById(`word-bank-${qIndex}`);
+
+        // Xóa cũ vẽ mới
+        wordBank.innerHTML = '';
+        state.shuffledBank.forEach((item, bIndex) => {
+            const charDiv = document.createElement('div');
+            charDiv.className = 'char-block';
+            charDiv.innerText = item.char;
+            
+            if (state.selectedIndices.includes(bIndex)) {
+                charDiv.classList.add('hidden'); // Ẩn nếu đã chọn
+            } else {
+                charDiv.onclick = () => selectChar(qIndex, bIndex);
+            }
+            wordBank.appendChild(charDiv);
+        });
+
+        answerArea.innerHTML = '';
+        state.selectedIndices.forEach((bIndex) => {
+            const charDiv = document.createElement('div');
+            charDiv.className = 'char-block';
+            charDiv.innerText = state.shuffledBank[bIndex].char;
+            charDiv.onclick = () => deselectChar(qIndex, bIndex); // Bấm để gỡ ra
+            answerArea.appendChild(charDiv);
+        });
+
+        // Tự động check khi số lượng chữ ở ô đáp án bằng với độ dài câu gốc
+        if (state.selectedIndices.length === state.targetChars.length && state.targetChars.length > 0) {
+            checkAnswer(qIndex);
+        }
+    }
+
+    function selectChar(qIndex, bIndex) {
+        appStates[qIndex].selectedIndices.push(bIndex);
+        renderQuestion(qIndex);
+    }
+
+    function deselectChar(qIndex, bIndex) {
+        const state = appStates[qIndex];
+        state.selectedIndices = state.selectedIndices.filter(idx => idx !== bIndex);
+        
+        // Ẩn thông báo lỗi nếu đang hiển thị
+        const resultArea = document.getElementById(`result-area-${qIndex}`);
+        resultArea.style.display = 'none';
+        document.getElementById(`answer-area-${qIndex}`).classList.remove('shake');
+        
+        renderQuestion(qIndex);
+    }
+
+    function checkAnswer(qIndex) {
+        const state = appStates[qIndex];
+        const data = lessonData[qIndex];
+        
+        const userStr = state.selectedIndices.map(idx => state.shuffledBank[idx].char).join('');
+        const correctStr = state.targetChars.join('');
+
+        const resultArea = document.getElementById(`result-area-${qIndex}`);
+        const fullSentenceEl = document.getElementById(`full-sentence-${qIndex}`);
+        const translationEl = document.getElementById(`translation-${qIndex}`);
+        const answerArea = document.getElementById(`answer-area-${qIndex}`);
+
+        if (userStr === correctStr) {
+            // Đúng
+            state.isCompleted = true; // Khóa câu này lại
+            resultArea.classList.remove('error');
+            fullSentenceEl.innerText = data.c; // Hiện câu chuẩn có dấu câu
+            translationEl.innerText = data.n;
+            resultArea.style.display = 'block';
+            
+            // Xóa sự kiện click ở ô kết quả để không cho tháo chữ ra nữa
+            Array.from(answerArea.children).forEach(child => child.onclick = null);
+        } else {
+            // Sai
+            answerArea.classList.remove('shake');
+            void answerArea.offsetWidth; // Reset animation
+            answerArea.classList.add('shake');
+            
+            resultArea.classList.add('error');
+            fullSentenceEl.innerText = "Chưa đúng thứ tự rồi!";
+            translationEl.innerText = "Hãy nhấn vào chữ bên trên để gỡ ra và xếp lại nhé.";
+            resultArea.style.display = 'block';
+        }
+    }
+
+    // Chạy web
+    initApp();
+</script>
+
+</body>
+</html>
