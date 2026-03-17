@@ -5,24 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dịch chữ Hán không khó!</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
 
         :root {
-            --bg-color: #e8f5e9;
-            --container-bg: #ffffff;
-            --primary-color: #4caf50;
-            --primary-dark: #388e3c;
-            --text-color: #333;
-            --border-color: #c8e6c9;
-            --han-color: #1b5e20;
+            --bg-color: #f4ebf8;        
+            --container-bg: #ffffff;    
+            --primary-color: #b388ff;   
+            --primary-dark: #7c4dff;    
+            --text-color: #333333;      
+            --border-color: #d1c4e9;    
+            --han-color: #4527a0;       
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Times New Roman', serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
+            font-size: 18px; 
         }
 
         .page-container {
@@ -30,7 +31,6 @@
             margin: 0 auto;
         }
 
-        /* --- PHẦN CSS MỚI CHO HEADER VÀ NÚT BẤM --- */
         .header-container {
             display: flex;
             align-items: center;
@@ -42,15 +42,15 @@
 
         h1.page-title {
             text-align: left;
-            color: var(--primary-color);
-            margin: 0; /* Xóa margin cũ để căn chỉnh đều với nút bấm */
+            color: var(--primary-dark); 
+            margin: 0; 
             font-size: 2em;
         }
 
         .btn-next-part {
             display: inline-block;
             padding: 10px 18px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             color: #ffffff;
             background-color: var(--primary-color); 
@@ -66,7 +66,6 @@
             color: #ffffff;
             transform: translateY(-2px);
         }
-        /* --- KẾT THÚC PHẦN CSS MỚI --- */
 
         .question-card {
             background-color: var(--container-bg);
@@ -86,7 +85,7 @@
 
         .answer-area {
             min-height: 60px;
-            border: 2px dashed #a5d6a7;
+            border: 2px dashed #b39ddb; 
             border-radius: 8px;
             padding: 10px;
             margin-bottom: 15px;
@@ -106,7 +105,7 @@
         }
 
         .char-block {
-            font-family: 'Ma Shan Zheng', cursive;
+            font-family: 'Noto Serif TC', 'PMingLiU', 'SimSun', 'Times New Roman', serif;
             font-size: 1.8em;
             color: var(--han-color);
             background-color: white;
@@ -135,7 +134,7 @@
             display: none;
             margin-top: 15px;
             padding: 15px;
-            background-color: #e8f5e9;
+            background-color: #ede7f6; 
             border-radius: 8px;
             animation: fadeIn 0.4s;
         }
@@ -147,14 +146,15 @@
         }
 
         .full-sentence {
-            font-family: 'Ma Shan Zheng', cursive;
+            /* Phông chữ Hán cho câu hoàn chỉnh */
+            font-family: 'Noto Serif TC', 'PMingLiU', 'SimSun', 'Times New Roman', serif;
             font-size: 2em;
             color: var(--han-color);
             margin-bottom: 8px;
         }
 
         .translation {
-            font-size: 1em;
+            font-size: 1.1em;
             color: #333;
             font-style: italic;
         }
@@ -262,7 +262,6 @@
 
     function renderQuestion(qIndex) {
         const state = appStates[qIndex];
-        // ĐÃ SỬA LỖI Ở DÒNG BÊN DƯỚI
         if (state.isCompleted) return; 
         
         const answerArea = document.getElementById(`answer-area-${qIndex}`);
@@ -346,3 +345,5 @@
 
     initApp();
 </script>
+</body>
+</html>
