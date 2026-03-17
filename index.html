@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Học Chữ Hán - Luyện Phản Xạ</title>
+    <title>Dịch chữ Hán không khó!</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
 
@@ -182,9 +182,9 @@
 <div class="page-container">
     
     <div class="header-container">
-        <h1 class="page-title">Luyện Ghép Chữ Hán Cổ</h1>
+        <h1 class="page-title">Luyện dịch Hán - Việt</h1>
         <a href="https://voduongthangquang-lab.github.io/PHTX-GK3-HANCO-VietHan/" class="btn-next-part" target="_blank">
-            Phần 4 (Luyện Việt - Hán) ➔
+            Phần 4 (Luyện dịch Việt - Hán) ➔
         </a>
     </div>
     <div id="quiz-list">
@@ -214,7 +214,6 @@
         { h: "Cưu viết: “Tử năng canh minh khả hĩ; bất năng canh minh, đông tỉ do ố tử chi thanh”.", c: "鳩曰：「子能更鳴可矣；不能更鳴，東徙猶惡子之聲」。", n: "Chim cưu nói: “Anh phải thay đổi được tiếng kêu mới nên, nếu không thay đổi được tiếng kêu thì dời sang đông người ta vẫn ghét tiếng kêu của anh”." }
     ];
 
-    // Mảng lưu trữ trạng thái của từng câu hỏi
     let appStates = [];
 
     function shuffleArray(array) {
@@ -231,11 +230,9 @@
         let htmlContent = '';
 
         lessonData.forEach((data, index) => {
-            // Lọc bỏ dấu câu
             let targetChars = data.c.replace(/[^\u4E00-\u9FFF一二三四五六七八九十]/g, '').split('');
             let objectsToShuffle = targetChars.map((char, originalId) => ({ char, originalId }));
             
-            // Lưu trạng thái độc lập cho câu này
             appStates.push({
                 targetChars: targetChars,
                 shuffledBank: shuffleArray(objectsToShuffle),
@@ -258,7 +255,6 @@
 
         listContainer.innerHTML = htmlContent;
 
-        // Render toàn bộ các câu hỏi ra màn hình
         appStates.forEach((_, index) => {
             renderQuestion(index);
         });
@@ -266,12 +262,10 @@
 
     function renderQuestion(qIndex) {
         const state = appStates[qIndex];
-        if (state.isCompleted) return; // Nếu xếp xong rồi thì không render lại nữa
-
+        if (state.isCompleted) return; /
         const answerArea = document.getElementById(`answer-area-${qIndex}`);
         const wordBank = document.getElementById(`word-bank-${qIndex}`);
 
-        // Xóa cũ vẽ mới
         wordBank.innerHTML = '';
         state.shuffledBank.forEach((item, bIndex) => {
             const charDiv = document.createElement('div');
@@ -310,7 +304,6 @@
         const state = appStates[qIndex];
         state.selectedIndices = state.selectedIndices.filter(idx => idx !== bIndex);
         
-        // Ẩn thông báo lỗi nếu đang hiển thị
         const resultArea = document.getElementById(`result-area-${qIndex}`);
         resultArea.style.display = 'none';
         document.getElementById(`answer-area-${qIndex}`).classList.remove('shake');
@@ -338,7 +331,6 @@
             translationEl.innerText = data.n;
             resultArea.style.display = 'block';
             
-            // Xóa sự kiện click ở ô kết quả để không cho tháo chữ ra nữa
             Array.from(answerArea.children).forEach(child => child.onclick = null);
         } else {
             // Sai
@@ -353,7 +345,6 @@
         }
     }
 
-    // Chạy web
     initApp();
 </script>
 
