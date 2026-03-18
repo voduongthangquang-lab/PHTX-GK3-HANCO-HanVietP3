@@ -6,13 +6,14 @@
     <title>Dịch chữ Hán không khó!</title>
     <style>
         :root {
-            --bg-color: #f4ebf8;        
-            --container-bg: #ffffff;    
-            --primary-color: #b388ff;   
-            --primary-dark: #7c4dff;    
-            --text-color: #333333;      
-            --border-color: #d1c4e9;    
-            --han-color: #4527a0;       
+            /* Tông màu nâu pastel */
+            --bg-color: #f5efe6;        /* Màu nền tổng thể (Be nhạt) */
+            --container-bg: #ffffff;    /* Nền thẻ câu hỏi (Trắng) */
+            --primary-color: #c8b6a6;   /* Nâu pastel chủ đạo (Nút bấm, viền khối) */
+            --primary-dark: #8c7a6b;    /* Nâu sẫm hơn (Tiêu đề, hiệu ứng hover) */
+            --text-color: #4a4036;      /* Nâu đen (Chữ thường) */
+            --border-color: #e3d5ca;    /* Màu viền khối nhạt */
+            --han-color: #5c493a;       /* Nâu cafe đậm (Màu chữ Hán) */
         }
 
         body {
@@ -74,17 +75,17 @@
             margin-bottom: 30px;
         }
 
-                    .am-han-viet {
-                font-family: "KaiTi", "STKaiti", "Noto Serif SC", "SimSun", serif;
-                font-size: 1.8em;
-                color: var(--primary-dark);
-                margin-bottom: 15px;
-                font-weight: bold;
-            }
+        .am-han-viet {
+            font-family: "KaiTi", "STKaiti", "Noto Serif SC", "SimSun", serif;
+            font-size: 1.8em;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
 
         .answer-area {
             min-height: 60px;
-            border: 2px dashed #b39ddb; 
+            border: 2px dashed var(--primary-color); 
             border-radius: 8px;
             padding: 10px;
             margin-bottom: 15px;
@@ -133,7 +134,7 @@
             display: none;
             margin-top: 15px;
             padding: 15px;
-            background-color: #ede7f6; 
+            background-color: #f7f1eb; 
             border-radius: 8px;
             animation: fadeIn 0.4s;
         }
@@ -145,7 +146,6 @@
         }
 
         .full-sentence {
-            /* Trả về font Times New Roman vì kết quả hiển thị tiếng Việt */
             font-family: 'Times New Roman', serif;
             font-size: 1.6em;
             color: var(--han-color);
